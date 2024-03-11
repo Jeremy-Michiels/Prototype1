@@ -6,11 +6,10 @@ import './Style/bootstrap/css/bootstrap.min.css'
 
 function App() {
 
-  const [text, setText] = useState("유")
   const [active, setActive] = useState(false)
   const [green, setGreen] = useState(false)
-  const [stopFlash, setStopFlash] = useState(false)
   const [flashing, setFlashing] = useState(false)
+  const [armband, setArmband] = useState(true)
 
   const [x, setX] = useState(0)
   const [y, setY] = useState(0)
@@ -43,6 +42,15 @@ function App() {
   }
   }
 
+  function armbandCheck(){
+    if(armband){
+      Enter()
+    }
+    else{
+
+    }
+  }
+
   function Enter(){
     if(!active){
       setActive(true)
@@ -66,7 +74,6 @@ function App() {
             clearInterval(interval)
             
             setGreen(false)
-            setStopFlash(true)
             setFlashing(false)
 
 
@@ -106,7 +113,7 @@ function App() {
 
 
   return (
-    <div className="App" onMouseMove={(e) => mouseMover(e)}>
+    <div className="App" onMouseMove={(e) => mouseMover(e)} style={{cursor: armband ? "grabbing" : "pointer"}}>
 
       <div className='container'>
 
@@ -114,7 +121,7 @@ function App() {
           <div className='col-md-2 p-5 rounded' ref={div}  style={{backgroundColor: 'grey'}}>
             <div className='row'>
             <button className='btn btn-danger m-2' ref={button}>
-          <h1>{text}</h1>
+          <h1>유</h1>
         </button>
             </div>
             <div className='row'>
@@ -125,16 +132,19 @@ function App() {
             </div>
             <div className='row-sm-1'>
               <div className='col-sm-1 ms-4' style={{height: '400px', backgroundColor: "grey", position: 'relative'}} >
-                <div style={{position: 'absolute', bottom: "200px", left: "-30px", width: "150px", height: "150px"}}onMouseEnter={Enter}>
+                <div style={{position: 'absolute', bottom: "200px", left: "-30px", width: "150px", height: "150px"}}onMouseEnter={armbandCheck}>
                   <div className=''>
-                    <button className='btn btn-dark mt-5' ref={klik}>
+                    <button className='btn btn-dark mt-5' ref={klik} onClick={Enter}>
                       O
                     </button>
                   </div>
                 </div>
               </div>
             </div>
-            {active ? (
+
+            {armband ? (
+              <>
+              {active ? (
               <>
               {active && green && flashing ? (
                 <>
@@ -174,8 +184,39 @@ function App() {
               </>
             ): <>
             </>}
+              </>
+              
+            )
+          : (<></>)
+          }
+            
           
         
+        </div>
+
+        
+        {armband && !active ? (
+          <div className='rounded-start rounded-bottom p-3' style={{position: 'fixed', top: 15, right: 15, border: "solid", "cursor": 'context-menu', backgroundColor: "#ffaaaa"}}>
+            Om het verkeerslicht te activeren, houd uw hand bij de knop in de buurt.
+          </div>
+        ): <></>}
+        
+        
+        
+        <div className='rounded-top rounded-start p-3' style={{position: 'fixed', bottom: 0, right: 0, border: "solid", cursor: 'context-menu'}}>
+          <div className='row m-1 p-1 border border-primary' style={{cursor: 'pointer', backgroundColor: armband ? 'grey' : 'white'}} onClick={(() => setArmband(true))}>
+            <div className='col'>
+            Armband
+            </div>
+            <div className='col'>
+
+            </div>
+          </div>
+          <div className='row m-1 p-1 border border-primary' style={{cursor: 'pointer',backgroundColor: armband ? 'white' : 'grey'}} onClick={(() => setArmband(false))}>
+            <div className='col'>
+            Geen armband
+            </div>
+          </div>
         </div>
         
       </div>
