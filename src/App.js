@@ -202,8 +202,8 @@ function App() {
         ): <></>}
         
         
-        
-        <div className='rounded-top rounded-start p-3' style={{position: 'fixed', bottom: 0, right: 0, border: "solid", cursor: 'context-menu'}}>
+        {!active ? (
+          <div className='rounded-top rounded-start p-3' style={{position: 'fixed', bottom: 0, right: 0, border: "solid", cursor: 'context-menu'}}>
           <div className='row m-1 p-1 border border-primary' style={{cursor: 'pointer', backgroundColor: armband ? 'grey' : 'white'}} onClick={(() => setArmband(true))}>
             <div className='col'>
             Armband
@@ -218,6 +218,9 @@ function App() {
             </div>
           </div>
         </div>
+        ) : <>
+        </> }
+        
         
       </div>
     </div>
